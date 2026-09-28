@@ -13,6 +13,7 @@ Run it by opening `fibonacci-clock.html` directly in a browser, or serve the fol
 - `fibonacci-clock.html`: markup only (the SVG skeleton and the speed button).
 - `style.css`: all styles and theme tokens.
 - `script.js`: one IIFE that builds the SVG content and runs the clock. It is loaded with a plain `<script>` at the end of `<body>` because it looks up SVG elements by id at startup. Keep it there, or add `defer` if you move it into `<head>`.
+- `ubuntu-screensaver/`: GNOME screensaver wrapper (Python, GTK 4, WebKitGTK 6.0) plus `install.sh`/`uninstall.sh`. The installer copies the three root web files into `~/.local/share/fibonacci-screensaver/web/`, so rerun `./install.sh` after changing them. The screensaver injects its own CSS/JS (dark theme, hides `#speed` and the cursor) instead of editing the web files, so keep the `#speed` id and the `data-theme` hook working. Its `landscape.js` also assumes the dial center (300,560) and repositions the `.title`, `#digital`, `.caption` and `.fib` text elements by selector. See `ubuntu-screensaver/README.md`.
 - Only external resource: Noto Serif from Google Fonts (with serif fallbacks).
 
 ## Geometry (the part that needs cross-reading to understand)
