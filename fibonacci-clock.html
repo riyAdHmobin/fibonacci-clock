@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fibonacci Clock</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<svg id="clock" viewBox="0 0 600 1000" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Fibonacci spiral clock">
+  <!-- <text class="title" x="300" y="165" text-anchor="middle">Fibonacci Clock</text> -->
+  <text class="digital" id="digital" x="300" y="222" text-anchor="middle">00:00</text>
+
+  <g id="tracks"></g>
+  <g id="labels"></g>
+  <g id="dial"></g>
+  <path id="spiral" class="spiral"></path>
+  <line id="hand" class="hand"></line>
+  <circle class="pivot" cx="300" cy="560" r="6.5"></circle>
+
+  <!-- <text class="caption" x="300" y="918" text-anchor="middle">Time, drawn by a Fibonacci spiral</text> -->
+  <!-- <text class="fib" x="300" y="968" text-anchor="middle">1 1 2 3 5 8 13</text> -->
+</svg>
+
+<button id="speed" type="button">Watch 12 hours in 30 seconds</button>
+
+<script src="script.js"></script>
+</body>
+</html>
