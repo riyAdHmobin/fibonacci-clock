@@ -10,12 +10,24 @@ so the web files stay unchanged.
 import argparse
 import json
 import math
+import os
 import re
 import signal
 import sys
 from pathlib import Path
 
 import gi
+
+# Ubuntu 23.10+ blocks unprivileged user namespaces via AppArmor, so
+# WebKit's bubblewrap sandbox fails ("bwrap: setting up uid map:
+# Permission denied") and the viewer crashes before showing anything.
+# Only then run WebKit without its sandbox. The viewer loads only the
+# bundled local page (plus the Google Fonts stylesheet it links).
+try:
+    if Path("/proc/sys/kernel/apparmor_restrict_unprivileged_userns").read_text().strip() == "1":
+        os.environ.setdefault("WEBKIT_DISABLE_SANDBOX_THIS_IS_DANGEROUS", "1")
+except OSError:
+    pass
 
 
 gi.require_version("Gtk", "4.0")

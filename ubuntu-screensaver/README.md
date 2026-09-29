@@ -54,3 +54,6 @@ Your settings stay in dconf under `/org/gnome/shell/extensions/fibonacci-clock/`
 
 GNOME's own screen blanking and lock screen still apply. If Settings > Power > Screen Blank is shorter than the idle time, the screen blanks before the clock shows.
 
+## WebKit sandbox on Ubuntu
+
+Ubuntu 23.10 and later restrict unprivileged user namespaces with AppArmor (`kernel.apparmor_restrict_unprivileged_userns = 1`). WebKit's bubblewrap sandbox then fails with `bwrap: setting up uid map: Permission denied` and the viewer crashes before it shows a window. When that restriction is on, `fibonacci-viewer.py` sets `WEBKIT_DISABLE_SANDBOX_THIS_IS_DANGEROUS=1` for itself. The viewer only loads the bundled local page and the Google Fonts stylesheet it links.
