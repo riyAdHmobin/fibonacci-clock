@@ -23,8 +23,29 @@ const COLOR_GROUPS = [
         ['color-track', 'Hour tracks'],
         ['color-track-current', 'Current hour track'],
     ]],
+    ['Minutes', [
+        ['color-minute', 'Minute numbers'],
+        ['color-minute-current', 'Current minute number'],
+        ['color-minute-track', 'Minute tracks'],
+        ['color-minute-track-current', 'Current minute track'],
+    ]],
+    ['Seconds', [
+        ['color-second', 'Second numbers'],
+        ['color-second-current', 'Current second number'],
+        ['color-second-track', 'Second tracks'],
+        ['color-second-track-current', 'Current second track'],
+    ]],
+    ['Weekdays', [
+        ['color-day', 'Weekday names'],
+        ['color-day-current', 'Current weekday name'],
+        ['color-day-track', 'Weekday tracks'],
+        ['color-day-track-current', 'Current weekday track'],
+    ]],
     ['Spiral', [
-        ['color-spiral', 'Spiral'],
+        ['color-spiral', 'Hour spiral'],
+        ['color-minute-spiral', 'Minute spiral'],
+        ['color-second-spiral', 'Second spiral'],
+        ['color-day-spiral', 'Weekday spiral'],
     ]],
     ['Text', [
         ['color-digital', 'Digital time'],
@@ -38,6 +59,9 @@ const COLOR_GROUPS = [
 const FONTS = [
     ['digital', 'Digital time'],
     ['hour', 'Hour numbers'],
+    ['minute', 'Minute numbers'],
+    ['second', 'Second numbers'],
+    ['day', 'Weekday names'],
     ['title', 'Title'],
     ['caption', 'Caption'],
     ['numbers', 'Fibonacci numbers'],

@@ -4,6 +4,9 @@
   --muted: #7d838c;
   --track: #b9bec6;
   --spiral: #3f7fb5;
+  --minute-spiral: #5f9e7f;
+  --second-spiral: #9a72b8;
+  --day-spiral: #b8902a;
   --accent: #d8643f;
   --dial: #1c1f24;
   box-sizing: border-box;
@@ -17,6 +20,9 @@
     --muted: #bdbdbd;
     --track: #4a4a4a;
     --spiral: #6fa8d6;
+    --minute-spiral: #7fc4a0;
+    --second-spiral: #b99ad6;
+    --day-spiral: #e0bf5f;
     --accent: #e8805f;
     --dial: #ffffff;
   }
@@ -27,6 +33,9 @@
   --muted: #bdbdbd;
   --track: #4a4a4a;
   --spiral: #6fa8d6;
+  --minute-spiral: #7fc4a0;
+  --second-spiral: #b99ad6;
+  --day-spiral: #e0bf5f;
   --accent: #e8805f;
   --dial: #ffffff;
 }
@@ -54,14 +63,29 @@ svg {
 }
 .title { fill: var(--ink); font-size: 46px; letter-spacing: 1px; }
 .digital { fill: var(--accent); font-size: 32px; font-weight: 700; letter-spacing: 2px; font-variant-numeric: tabular-nums; }
-.track { fill: none; stroke: var(--track); stroke-width: 2.5; stroke-linecap: round; transition: stroke .4s; }
+.track { fill: none; stroke: var(--track); stroke-width: 2; stroke-linecap: round; transition: stroke .4s; }
 .track.now { stroke: var(--accent); stroke-width: 3; }
 .hour { fill: var(--muted); font-size: 23px; font-weight: 700; transition: fill .4s; }
 .hour.now { fill: var(--accent); }
+.minute-track { fill: none; stroke: var(--track); stroke-width: 2; stroke-linecap: round; transition: stroke .4s; }
+.minute-track.now { stroke: var(--minute-spiral); stroke-width: 2.5; }
+.minute { fill: var(--muted); font-size: 17px; font-weight: 700; transition: fill .4s; }
+.minute.now { fill: var(--minute-spiral); }
+.second-track { fill: none; stroke: var(--track); stroke-width: 2; stroke-linecap: round; transition: stroke .2s; }
+.second-track.now { stroke: var(--second-spiral); stroke-width: 2; }
+.second { fill: var(--muted); font-size: 14px; font-weight: 700; transition: fill .2s; }
+.second.now { fill: var(--second-spiral); }
+.day-track { fill: none; stroke: var(--track); stroke-width: 2; stroke-linecap: round; transition: stroke .4s; }
+.day-track.now { stroke: var(--day-spiral); stroke-width: 2.5; }
+.day { fill: var(--muted); font-size: 15px; font-weight: 700; letter-spacing: .5px; transition: fill .4s; }
+.day.now { fill: var(--day-spiral); }
 .dial-ring { fill: none; stroke: var(--dial); stroke-width: 2.5; }
 .tick { stroke: var(--dial); stroke-width: 1.4; stroke-linecap: round; }
 .tick.major { stroke-width: 2.2; }
 .spiral { fill: none; stroke: var(--spiral); stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
+.minute-spiral { fill: none; stroke: var(--minute-spiral); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; opacity: .8; }
+.second-spiral { fill: none; stroke: var(--second-spiral); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; opacity: .8; }
+.day-spiral { fill: none; stroke: var(--day-spiral); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; opacity: .8; }
 .hand { stroke: var(--dial); stroke-width: 3; stroke-linecap: round; }
 .pivot { fill: var(--accent); }
 .caption { fill: var(--spiral); font-size: 27px; }

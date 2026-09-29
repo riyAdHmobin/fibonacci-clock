@@ -23,7 +23,22 @@
     <key name="color-hour-current" type="s"><default>'#e8805f'</default><summary>Current hour number</summary></key>
     <key name="color-track" type="s"><default>'#4a4a4a'</default><summary>Hour tracks</summary></key>
     <key name="color-track-current" type="s"><default>'#e8805f'</default><summary>Current hour track</summary></key>
-    <key name="color-spiral" type="s"><default>'#6fa8d6'</default><summary>Spiral</summary></key>
+    <key name="color-minute" type="s"><default>'#bdbdbd'</default><summary>Minute numbers</summary></key>
+    <key name="color-minute-current" type="s"><default>'#7fc4a0'</default><summary>Current minute number</summary></key>
+    <key name="color-minute-track" type="s"><default>'#4a4a4a'</default><summary>Minute tracks</summary></key>
+    <key name="color-minute-track-current" type="s"><default>'#7fc4a0'</default><summary>Current minute track</summary></key>
+    <key name="color-second" type="s"><default>'#bdbdbd'</default><summary>Second numbers</summary></key>
+    <key name="color-second-current" type="s"><default>'#b99ad6'</default><summary>Current second number</summary></key>
+    <key name="color-second-track" type="s"><default>'#4a4a4a'</default><summary>Second tracks</summary></key>
+    <key name="color-second-track-current" type="s"><default>'#b99ad6'</default><summary>Current second track</summary></key>
+    <key name="color-day" type="s"><default>'#bdbdbd'</default><summary>Weekday names</summary></key>
+    <key name="color-day-current" type="s"><default>'#e0bf5f'</default><summary>Current weekday name</summary></key>
+    <key name="color-day-track" type="s"><default>'#4a4a4a'</default><summary>Weekday tracks</summary></key>
+    <key name="color-day-track-current" type="s"><default>'#e0bf5f'</default><summary>Current weekday track</summary></key>
+    <key name="color-spiral" type="s"><default>'#6fa8d6'</default><summary>Hour spiral</summary></key>
+    <key name="color-minute-spiral" type="s"><default>'#7fc4a0'</default><summary>Minute spiral</summary></key>
+    <key name="color-second-spiral" type="s"><default>'#b99ad6'</default><summary>Second spiral</summary></key>
+    <key name="color-day-spiral" type="s"><default>'#e0bf5f'</default><summary>Weekday spiral</summary></key>
     <key name="color-dial" type="s"><default>'#ffffff'</default><summary>Dial ring and ticks</summary></key>
     <key name="color-hand" type="s"><default>'#ffffff'</default><summary>Hour hand</summary></key>
     <key name="color-pivot" type="s"><default>'#e8805f'</default><summary>Center dot</summary></key>
@@ -35,11 +50,17 @@
     <key name="font-title" type="s"><default>'Noto Serif'</default><summary>Title font</summary></key>
     <key name="font-digital" type="s"><default>'Noto Serif Bold'</default><summary>Digital time font</summary></key>
     <key name="font-hour" type="s"><default>'Noto Serif Bold'</default><summary>Hour numbers font</summary></key>
+    <key name="font-minute" type="s"><default>'Noto Serif Bold'</default><summary>Minute numbers font</summary></key>
+    <key name="font-second" type="s"><default>'Noto Serif Bold'</default><summary>Second numbers font</summary></key>
+    <key name="font-day" type="s"><default>'Noto Serif Bold'</default><summary>Weekday names font</summary></key>
     <key name="font-caption" type="s"><default>'Noto Serif'</default><summary>Caption font</summary></key>
     <key name="font-numbers" type="s"><default>'Noto Serif'</default><summary>Fibonacci numbers font</summary></key>
     <key name="size-title" type="d"><default>46</default><summary>Title size</summary></key>
     <key name="size-digital" type="d"><default>32</default><summary>Digital time size</summary></key>
     <key name="size-hour" type="d"><default>23</default><summary>Hour numbers size</summary></key>
+    <key name="size-minute" type="d"><default>17</default><summary>Minute numbers size</summary></key>
+    <key name="size-second" type="d"><default>14</default><summary>Second numbers size</summary></key>
+    <key name="size-day" type="d"><default>15</default><summary>Weekday names size</summary></key>
     <key name="size-caption" type="d"><default>27</default><summary>Caption size</summary></key>
     <key name="size-numbers" type="d"><default>27</default><summary>Fibonacci numbers size</summary></key>
   </schema>

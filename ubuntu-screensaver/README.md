@@ -30,8 +30,8 @@ gnome-extensions prefs fibonacci-clock@deusexautomata.com
 ```
 
 - **General:** idle time, whether to show during video playback, a Preview button, and a reset for all colors, fonts and sizes.
-- **Colors:** background, dial ring and ticks, hour hand, center dot, hour numbers, current hour number, hour tracks, current hour track, spiral, digital time, title, caption, Fibonacci numbers.
-- **Fonts:** font face and size for the digital time, hour numbers, title, caption and Fibonacci numbers. Sizes are in SVG units; the portrait page is 600 units wide.
+- **Colors:** background, dial ring and ticks, hour hand, center dot, hour numbers, current hour number, hour tracks, current hour track, minute numbers, current minute number, minute tracks, current minute track, second numbers, current second number, second tracks, current second track, weekday names, current weekday name, weekday tracks, current weekday track, hour spiral, minute spiral, second spiral, weekday spiral, digital time, title, caption, Fibonacci numbers.
+- **Fonts:** font face and size for the digital time, hour numbers, minute numbers, second numbers, weekday names, title, caption and Fibonacci numbers. Sizes are in SVG units; the portrait page is 600 units wide.
 
 Title, caption and Fibonacci numbers settings only have an effect if that text is present in `fibonacci-clock.html`.
 
@@ -53,3 +53,4 @@ Your settings stay in dconf under `/org/gnome/shell/extensions/fibonacci-clock/`
 - The viewer turns those settings into injected CSS. It also forces the dark theme, hides the cursor and the speed button, and loads `landscape.js`. On landscape screens, `landscape.js` widens the SVG viewBox around the dial and moves the text left of it. The web files stay unchanged.
 
 GNOME's own screen blanking and lock screen still apply. If Settings > Power > Screen Blank is shorter than the idle time, the screen blanks before the clock shows.
+

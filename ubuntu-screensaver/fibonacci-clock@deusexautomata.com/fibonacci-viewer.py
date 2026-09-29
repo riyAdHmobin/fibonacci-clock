@@ -17,6 +17,7 @@ from pathlib import Path
 
 import gi
 
+
 gi.require_version("Gtk", "4.0")
 gi.require_version("Gdk", "4.0")
 gi.require_version("Pango", "1.0")
@@ -48,7 +49,22 @@ COLOR_RULES = {
     "color-hour-current": [".hour.now { fill: %s !important; }"],
     "color-track": [".track { stroke: %s !important; }"],
     "color-track-current": [".track.now { stroke: %s !important; }"],
+    "color-minute": [".minute { fill: %s !important; }"],
+    "color-minute-current": [".minute.now { fill: %s !important; }"],
+    "color-minute-track": [".minute-track { stroke: %s !important; }"],
+    "color-minute-track-current": [".minute-track.now { stroke: %s !important; }"],
+    "color-second": [".second { fill: %s !important; }"],
+    "color-second-current": [".second.now { fill: %s !important; }"],
+    "color-second-track": [".second-track { stroke: %s !important; }"],
+    "color-second-track-current": [".second-track.now { stroke: %s !important; }"],
+    "color-day": [".day { fill: %s !important; }"],
+    "color-day-current": [".day.now { fill: %s !important; }"],
+    "color-day-track": [".day-track { stroke: %s !important; }"],
+    "color-day-track-current": [".day-track.now { stroke: %s !important; }"],
     "color-spiral": [".spiral { stroke: %s !important; }"],
+    "color-minute-spiral": [".minute-spiral { stroke: %s !important; }"],
+    "color-second-spiral": [".second-spiral { stroke: %s !important; }"],
+    "color-day-spiral": [".day-spiral { stroke: %s !important; }"],
     "color-dial": [".dial-ring, .tick { stroke: %s !important; }"],
     "color-hand": [".hand { stroke: %s !important; }"],
     "color-pivot": [".pivot { fill: %s !important; }"],
@@ -60,6 +76,9 @@ FONT_TARGETS = {
     "title": ".title",
     "digital": ".digital",
     "hour": ".hour",
+    "minute": ".minute",
+    "second": ".second",
+    "day": ".day",
     "caption": ".caption",
     "numbers": ".fib",
 }

@@ -23,14 +23,16 @@ All drawing is in one SVG with `viewBox="0 0 600 1000"`. The dial center is `CX=
 
 - Angles are screen angles measured clockwise from 12 o'clock; `pt(A, r)` converts to SVG x/y.
 - The spiral is `r = R0 · e^(B·t)` with `B = ln(1.25) / (π/6)`: every 30° (one hour) the radius grows by 1.25×.
-- Hour marks are not placed around a circle. Hours 1–6 stack upward from the dial at angle `0`, hours 7–12 stack downward at angle `π`, each at radius `R0 · 1.25^k` (`k` = 1..6).
-- Each frame, the spiral is rotated by `rho` (the hour-hand angle, `hour12 · π/6` plus minute/second fraction). With this parameterization the spiral passes exactly through the current hour's mark. That is why the growth constant (1.25), `STEP`, and the mark radii must stay consistent: changing one without the others breaks the alignment.
+- Marks are not placed around a circle. `markSet()` stacks 12 marks along one axis through the dial: marks 1–6 outward at angle `axis`, 7–12 at `axis + π`, each at radius `R0 · scale · 1.25^k` (`k` = 1..6). Hours use axis 45° (1–6 up-right), minutes 90° (5–30 right, scale `1.25^-0.5`), seconds 315° (5–30 up-left). One mark per hour, per 5 minutes, per 5 seconds.
+- Three spirals share the same curve. Each frame, each is rotated by its hand angle (hour `rho`, minute `mu`, second `sigma`) plus `offset(axis, scale) = axis + ln(scale)/B`. With this parameterization each spiral passes exactly through its current mark. The hour hand line still points at the true hour angle `rho`.
+- A fourth, weekday spiral turns once a week (`omega`, 2π/7 per day, Monday = 0) and is rotated by `D_LO`. Its seven day labels sit on the vertical axis: folding each day's spiral parameter mod π puts Mon–Thu upward (angle `0`) and Fri–Sun downward (`π`), at radii from 90 outward in steps of `e^(B·π/7)`. That is why the growth constant (1.25), `STEP`, and the mark radii must stay consistent: changing one without the others breaks the alignment.
+- Hour, minute and second marks all lie on one family of 12 spiral curves 30° apart, because each row's `offset(axis, scale)` differs by a multiple of `STEP` (that is why the minute scale is `1.25^-0.5`). Each track spans ±22.5° (`M_SPAN`), so tracks of neighbouring rows meet end to end as continuous spirals. They stop short of the vertical axis, where the weekday labels are; weekday tracks are separate short arcs.
 - The grey "track" arcs next to each mark are short segments of the spiral as it will look when that hour is current (`r(A) = R · e^(-B(A-α))`).
 - `T_MIN`/`T_MAX` bound the spiral from a tight curl inside the dial to off the page.
 
 ## Runtime behavior
 
-- One `requestAnimationFrame` loop rebuilds the spiral path, updates the hand and digital time, and toggles the `.now` class on the active hour's track and label (only when the hour changes).
+- One `requestAnimationFrame` loop rebuilds the spiral path, updates the hand and digital time, and toggles the `.now` class on the active hour, 5-minute, 5-second and weekday track and label via `light()` (only when the mark changes).
 - Time comes from `now()`, which supports a fast-forward mode (`speed = 1440`, so 12 h in 30 s) by offsetting from `baseReal`/`baseClock`. Toggling back resets to real time.
 
 ## Theming
