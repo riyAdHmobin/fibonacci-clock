@@ -1,0 +1,8 @@
+{
+  "uuid": "fibonacci-clock@deusexautomata.com",
+  "name": "Fibonacci Clock Screensaver",
+  "description": "Shows the Fibonacci Clock full screen after a period of inactivity. Every color and font can be changed in the settings.",
+  "shell-version": ["45", "46", "47", "48"],
+  "settings-schema": "org.gnome.shell.extensions.fibonacci-clock",
+  "version": 1
+}

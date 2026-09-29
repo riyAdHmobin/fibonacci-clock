@@ -1,35 +1,29 @@
 #!/usr/bin/env bash
-# Install the Fibonacci Clock screensaver for the current user.
+# Install the Fibonacci Clock screensaver GNOME Shell extension for the
+# current user. Run again after changing the clock's web files.
 #
-#   ./install.sh [--timeout SECONDS] [--ignore-inhibitors]
+#   ./install.sh
 #
-# Copies the clock page and the daemon into ~/.local/share, adds a
-# launcher in ~/.local/bin, registers a GNOME autostart entry, and starts
-# the daemon now. No root needed, except to install missing packages.
+# Copies the extension and the clock page into
+# ~/.local/share/gnome-shell/extensions/, compiles its settings schema and
+# enables it. No root needed, except to install missing packages.
 set -euo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SRC_WEB="$(dirname "$HERE")"
+UUID="fibonacci-clock@deusexautomata.com"
+DEST="${XDG_DATA_HOME:-$HOME/.local/share}/gnome-shell/extensions/$UUID"
 
-NAME="fibonacci-screensaver"
-SHARE="${XDG_DATA_HOME:-$HOME/.local/share}/$NAME"
-BIN="$HOME/.local/bin/$NAME"
-AUTOSTART="${XDG_CONFIG_HOME:-$HOME/.config}/autostart/$NAME.desktop"
+case "${1:-}" in
+  -h|--help) sed -n '2,9p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+  "") ;;
+  *) echo "Unknown option: $1" >&2; exit 1 ;;
+esac
 
-timeout=120
-extra_args=""
-while [[ $# -gt 0 ]]; do
-  case "$1" in
-    --timeout) timeout="${2:?--timeout needs a value}"; shift 2 ;;
-    --ignore-inhibitors) extra_args=" --ignore-inhibitors"; shift ;;
-    -h|--help) sed -n '2,8p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
-    *) echo "Unknown option: $1" >&2; exit 1 ;;
-  esac
-done
-[[ "$timeout" =~ ^[0-9]+$ && "$timeout" -gt 0 ]] || { echo "--timeout must be a positive integer" >&2; exit 1; }
+command -v gnome-shell >/dev/null || { echo "GNOME Shell not found." >&2; exit 1; }
 
-# Runtime dependencies: PyGObject with GTK 4 and WebKitGTK 6.0.
-if ! python3 - <<'EOF' 2>/dev/null
+# Viewer dependencies: PyGObject with GTK 4 and WebKitGTK 6.0.
+if ! /usr/bin/python3 - <<'EOF' 2>/dev/null
 import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("WebKit", "6.0")
@@ -45,46 +39,34 @@ for f in fibonacci-clock.html style.css script.js; do
   [[ -f "$SRC_WEB/$f" ]] || { echo "Missing $SRC_WEB/$f" >&2; exit 1; }
 done
 
-# Stop a running copy before replacing its files.
-pkill -f "$SHARE/$NAME.py" 2>/dev/null || true
+# Remove the earlier standalone daemon version, if installed.
+"$HERE/uninstall.sh" --legacy-only
 
-mkdir -p "$SHARE/web" "$(dirname "$BIN")" "$(dirname "$AUTOSTART")"
-install -m 644 "$SRC_WEB/fibonacci-clock.html" "$SRC_WEB/style.css" "$SRC_WEB/script.js" "$SHARE/web/"
-install -m 755 "$HERE/$NAME.py" "$SHARE/$NAME.py"
-install -m 644 "$HERE/landscape.js" "$SHARE/landscape.js"
+mkdir -p "$DEST/web" "$DEST/schemas"
+install -m 644 "$HERE/$UUID"/{metadata.json,extension.js,prefs.js,launcher.js,landscape.js} "$DEST/"
+install -m 755 "$HERE/$UUID/fibonacci-viewer.py" "$DEST/"
+install -m 644 "$HERE/$UUID"/schemas/*.gschema.xml "$DEST/schemas/"
+install -m 644 "$SRC_WEB"/{fibonacci-clock.html,style.css,script.js} "$DEST/web/"
+glib-compile-schemas "$DEST/schemas"
 
-cat > "$BIN" <<EOF
-#!/bin/bash
-# Undo environment overrides leaked by snap apps (e.g. a VS Code snap
-# terminal). They point GTK and WebKit at the snap's libraries and crash
-# WebKit's helper processes.
-for orig in \$(compgen -v | grep '_VSCODE_SNAP_ORIG\$'); do
-  var="\${orig%_VSCODE_SNAP_ORIG}"
-  if [[ -n "\${!orig}" ]]; then export "\$var=\${!orig}"; else unset "\$var"; fi
-  unset "\$orig"
-done
-exec /usr/bin/python3 "$SHARE/$NAME.py" "\$@"
-EOF
-chmod 755 "$BIN"
+# A running Wayland session only discovers new extensions at login, so
+# `gnome-extensions enable` can fail the first time. Adding the UUID to
+# the enabled list directly makes it start at the next login either way.
+if gnome-extensions enable "$UUID" 2>/dev/null; then
+  echo "Installed and enabled."
+else
+  enabled="$(gsettings get org.gnome.shell enabled-extensions)"
+  if [[ "$enabled" != *"'$UUID'"* ]]; then
+    if [[ "$enabled" == "@as []" || "$enabled" == "[]" ]]; then
+      gsettings set org.gnome.shell enabled-extensions "['$UUID']"
+    else
+      gsettings set org.gnome.shell enabled-extensions "${enabled%]}, '$UUID']"
+    fi
+  fi
+  echo "Installed. Log out and back in to start it (GNOME loads new extensions at login)."
+fi
+echo "Settings: gnome-extensions prefs $UUID   (or the Extensions app)"
 
-cat > "$AUTOSTART" <<EOF
-[Desktop Entry]
-Type=Application
-Name=Fibonacci Clock Screensaver
-Comment=Shows the Fibonacci Clock after ${timeout}s of inactivity
-Exec=$BIN --timeout $timeout$extra_args
-X-GNOME-Autostart-enabled=true
-NoDisplay=true
-EOF
-
-setsid "$BIN" --timeout "$timeout"$extra_args >/dev/null 2>&1 < /dev/null &
-
-echo "Installed. The clock appears after ${timeout}s of inactivity and starts at every login."
-echo "Preview now:  $BIN --preview"
-
-# GNOME blanks the screen on its own schedule; warn if that comes first.
-delay="$(gsettings get org.gnome.desktop.session idle-delay 2>/dev/null | awk '{print $NF}')"
-if [[ -n "$delay" && "$delay" -ne 0 && "$delay" -le "$timeout" ]]; then
-  echo "Note: GNOME blanks the screen after ${delay}s, before the clock can show."
-  echo "      Raise Settings > Power > Screen Blank, or reinstall with a smaller --timeout."
+if [[ "$(gsettings get org.gnome.shell disable-user-extensions)" == "true" ]]; then
+  echo "Note: user extensions are turned off. Turn them on in the Extensions app."
 fi
